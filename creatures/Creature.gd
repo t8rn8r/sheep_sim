@@ -12,6 +12,8 @@ func init(name):
 	new_sight_area()
 	# collision_shape
 	new_collision_shape()
+	# camera
+	new_camera()
 	
 	## load blocks
 	for key in stats.blocks.keys():

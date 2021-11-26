@@ -7,9 +7,8 @@ var input_vector = Vector2.ZERO
 var bodies
 
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	var flocking = get_parent().stats.blocks["flocking"]
-	var type = get_parent().type
 	var friendly_body
 	
 	bodies = get_parent().sight.get_overlapping_bodies()

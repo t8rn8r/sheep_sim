@@ -21,7 +21,7 @@ func _init():
 	
 	# control type
 	blocks["control"]["active"] = true
-	blocks["control"]["type"] = "click"
+	blocks["control"]["type"] = "keyboard"
 	
 	# wandering
 	blocks["wandering"]["active"] = false

@@ -20,18 +20,18 @@ func _physics_process(delta):
 	else:
 		velocity = velocity.move_toward(Vector2.ZERO, movement["friction"] * delta)
 	
-	var position_x = get_parent().position.x
-	var position_y = get_parent().position.y
-	
-	if position_x < 0 || position_x > screen_size.x:
-		velocity.x = -velocity.x
-	if position_y < 0 || position_y > screen_size.y:
-		velocity.y = -velocity.y
-	
-	get_parent().position.x = \
-	  clamp(get_parent().position.x, 0, screen_size.x)
-	get_parent().position.y = \
-	  clamp(get_parent().position.y, 0, screen_size.y)
+#	var position_x = get_parent().position.x
+#	var position_y = get_parent().position.y
+#
+#	if position_x < 0 || position_x > screen_size.x:
+#		velocity.x = -velocity.x
+#	if position_y < 0 || position_y > screen_size.y:
+#		velocity.y = -velocity.y
+#
+#	get_parent().position.x = \
+#	  clamp(get_parent().position.x, 0, screen_size.x)
+#	get_parent().position.y = \
+#	  clamp(get_parent().position.y, 0, screen_size.y)
 	
 	emit_signal("move",velocity)
 	velocity = get_parent().move_and_slide(velocity)

@@ -1,18 +1,22 @@
 extends KinematicBody2D
 
 var Stats = {
-	"":			preload("res://creatures/Stats.tscn"),
-	"player":	preload("res://creatures/Stats_player.tscn"),
-	"sheep":	preload("res://creatures/Stats_sheep.tscn")
+	"":			preload("res://creatures/scenes/Stats.tscn"),
+	"player":	preload("res://creatures/scenes/Stats_player.tscn"),
+	"sheep":	preload("res://creatures/scenes/Stats_sheep.tscn")
 }
 
 
 var stats
 var type
 var sprite
+var collision
 var collision_shape
+var click_area
+var click_area_shape
 var sight
 var sight_area
+var camera
 
 var velocity
 
@@ -28,12 +32,24 @@ func set_sprite(n):
 
 
 func new_collision_shape():
-	collision_shape = CollisionShape2D.new()
-	collision_shape.set_shape(CapsuleShape2D.new())
-	add_child(collision_shape)
-	collision_shape = collision_shape.get_shape()
+	var Collision = preload("res://creatures/scenes/Collision.tscn")
+	collision = Collision.instance().duplicate()
+	add_child(collision)
+	
+	collision_shape = collision.get_shape().duplicate()
 	collision_shape.set_radius(stats.collision_radius)
 	collision_shape.set_height(stats.collision_height)
+	collision.set_shape(collision_shape)
+	
+	var Click_area = preload("res://creatures/scenes/Click_area.tscn")
+	click_area = Click_area.instance().duplicate()
+	add_child(click_area)
+	
+	click_area_shape = click_area.get_shape().duplicate()
+	click_area_shape.set_radius(stats.collision_radius)
+	click_area_shape.set_height(stats.collision_height)
+	click_area.set_shape(click_area_shape)
+	click_area.connect("clicked",self,"on_click")
 	
 func set_collision_radius(n):
 	stats.collision_radius = n
@@ -58,8 +74,19 @@ func set_sight_radius(n):
 	sight_area.set_radius(n)
 
 
+func new_camera():
+	camera = Camera2D.new()
+	add_child(camera)
+	
+func set_camera_current():
+	camera.make_current()
+
+
 func load_block(Block):
 	var block = Block.instance().duplicate()
 	add_child(block)
 	return block
 
+
+func on_click():
+	set_camera_current()
